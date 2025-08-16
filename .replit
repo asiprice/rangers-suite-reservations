@@ -1,6 +1,5 @@
-# Replit Configuration for Texas Rangers Suite Reservation System
-
-modules = ["nodejs-20", "web"]
+modules = ["nodejs-20", "web", "ruby-3.2"]
+run = "cd backend && chmod +x setup-replit.sh && ./setup-replit.sh && npm start\""
 
 [nix]
 channel = "stable-24_05"
