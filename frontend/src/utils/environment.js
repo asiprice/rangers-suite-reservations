@@ -7,32 +7,38 @@ const isReplit = () => {
   // Check if we're running in Replit based on URL patterns
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname;
-    return hostname.includes('repl.co') || hostname.includes('replit.com');
+    console.log('🔍 Hostname:', hostname);
+    // Check for both repl.co and replit.dev domains
+    return hostname.includes('repl.co') || hostname.includes('replit.dev');
   }
   return false;
 };
 
 const getEnvironment = () => {
-  if (isReplit()) return 'replit';
-  if (process.env.NODE_ENV === 'production') return 'production';
-  return 'local';
+  const env = isReplit() ? 'replit' : 
+             (process.env.NODE_ENV === 'production' ? 'production' : 'local');
+  console.log('🌍 Environment detected:', env);
+  return env;
 };
 
 const getBackendUrl = () => {
   const env = getEnvironment();
+  let apiUrl;
   
   switch (env) {
     case 'replit':
-      // In Replit, backend and frontend run on same domain
-      if (typeof window !== 'undefined') {
-        return `${window.location.origin}/api`;
-      }
-      return '/api';
+      // In Replit, always use relative URLs - works for both .repl.co and .replit.dev
+      apiUrl = '/api';
+      break;
     case 'local':
-      return 'http://localhost:3001/api';
+      apiUrl = 'http://localhost:3001/api';
+      break;
     default:
-      return 'http://localhost:3001/api';
+      apiUrl = 'http://localhost:3001/api';
   }
+  
+  console.log('🎯 API URL:', apiUrl);
+  return apiUrl;
 };
 
 export {
