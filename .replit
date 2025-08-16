@@ -6,7 +6,7 @@ modules = ["nodejs-20", "web"]
 channel = "stable-24_05"
 
 # Main run command - starts the backend server
-run = "cd backend && npm install && npm start"
+run = "cd backend && chmod +x setup-replit.sh && ./setup-replit.sh && npm start"
 
 # Development commands
 [deployment]
