@@ -1,10 +1,8 @@
-modules = ["nodejs-20", "web"]
+modules = ["nodejs-20", "web", "ruby-3.2"]
+run = "chmod +x start-replit.sh && ./start-replit.sh"
 
 [nix]
 channel = "stable-24_05"
-
-# Main run command - starts both backend and frontend
-run = "chmod +x start-replit.sh && ./start-replit.sh"
 
 # Development commands
 [deployment]
