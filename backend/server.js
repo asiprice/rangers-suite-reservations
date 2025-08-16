@@ -1,12 +1,38 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const { db, initializeDatabase } = require('./database');
+const { getPort, getCorsOrigins, getEnvironment } = require('../shared/environment');
 
 const app = express();
-const PORT = 3001;
+const PORT = getPort(3001);
+const environment = getEnvironment();
 
-app.use(cors());
+console.log(`🚀 Starting server in ${environment} environment`);
+console.log(`📡 Port: ${PORT}`);
+console.log(`🌐 CORS origins:`, getCorsOrigins());
+
+// Configure CORS based on environment
+app.use(cors({
+  origin: getCorsOrigins(),
+  credentials: true
+}));
+
 app.use(express.json());
+
+// Health check endpoint for Replit
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'healthy', 
+    environment,
+    timestamp: new Date().toISOString() 
+  });
+});
+
+// Serve frontend static files in Replit
+if (environment === 'replit') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+}
 
 initializeDatabase();
 
@@ -115,6 +141,19 @@ app.delete('/api/reservations/:id', (req, res) => {
   );
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+// In Replit, serve React app for any non-API routes
+if (environment === 'replit') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+  });
+}
+
+app.listen(PORT, '0.0.0.0', () => {
+  const serverUrl = environment === 'replit' 
+    ? `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`
+    : `http://localhost:${PORT}`;
+    
+  console.log(`✅ Server running at ${serverUrl}`);
+  console.log(`🏥 Health check: ${serverUrl}/health`);
+  console.log(`🎮 API base: ${serverUrl}/api`);
 });

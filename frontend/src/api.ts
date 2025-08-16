@@ -1,6 +1,9 @@
 import { Game, Reservation } from './types';
+import { getBackendUrl } from './utils/environment';
 
-const API_BASE = 'http://localhost:3001/api';
+const API_BASE = getBackendUrl();
+
+console.log(`🌐 Frontend API base URL: ${API_BASE}`);
 
 export const gameApi = {
   getAll: async (): Promise<Game[]> => {

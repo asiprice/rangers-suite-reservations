@@ -1,8 +1,9 @@
 import { Game, Reservation } from '../types';
+import { getBackendUrl } from '../utils/environment';
 
-// For Expo development - use your computer's IP address when testing on physical device
-// For simulator, localhost works fine
-const API_BASE = __DEV__ ? 'http://localhost:3001/api' : 'http://localhost:3001/api';
+const API_BASE = getBackendUrl();
+
+console.log(`📱 Mobile API base URL: ${API_BASE}`);
 
 export const gameApi = {
   getAll: async (): Promise<Game[]> => {

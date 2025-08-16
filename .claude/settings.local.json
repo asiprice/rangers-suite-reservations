@@ -9,7 +9,10 @@
       "Bash(npx react-native:*)",
       "Bash(rm:*)",
       "Bash(npx create-expo-app:*)",
-      "Bash(npx expo start:*)"
+      "Bash(npx expo start:*)",
+      "Bash(npm install:*)",
+      "Bash(sqlite3:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
