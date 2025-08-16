@@ -1,5 +1,4 @@
-modules = ["nodejs-20", "web", "ruby-3.2"]
-run = "cd backend && chmod +x setup-replit.sh && ./setup-replit.sh && npm start\""
+modules = ["nodejs-20", "web"]
 
 [nix]
 channel = "stable-24_05"

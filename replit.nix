@@ -2,10 +2,9 @@
 {pkgs}: {
   deps = [
     pkgs.nodejs_20
-    pkgs.npm-check-updates
     pkgs.sqlite
-    pkgs.python3
     pkgs.git
+    pkgs.python311  # Use Python 3.11 which has distutils
     pkgs.gcc
     pkgs.gnumake
     pkgs.pkg-config
@@ -15,8 +14,6 @@
   env = {
     REPL_HOME = "$HOME";
     REPL_DATA = "$HOME/data";
-    # Help npm rebuild native modules
-    npm_config_build_from_source = "true";
-    npm_config_cache = "$HOME/.npm";
+    PYTHON = "${pkgs.python311}/bin/python3";
   };
 }
